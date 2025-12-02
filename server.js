@@ -38,33 +38,33 @@ app.post('/api/karte', async (req, res) => {
       'LINE User ID': karteData.userId,
       'ステータス': karteData.status || 'light',
       '登録日時': karteData.timestamp,
-      '最終更新日時': new Date().toISOString(),
-      
-      // ライトカルテ情報
-      '都道府県': karteData.prefecture || '',
-      '市区町村': karteData.city || '',
-      'メニュー対象': karteData.menuTarget || '',
-      'メニューカテゴリ': karteData.menuCategory || '',
-      'メニュー詳細': karteData.menuDetail || '',
-      'オフ有無': karteData.hasOff || '',
-      '参考料金': karteData.estimatedPrice || 0,
-      '利用シーン': karteData.scene || '',
-      '施設名': karteData.hospitalName || '',
-      '許可状況': karteData.permission || '',
-      
-      // ミドルカルテ情報
-      '第1希望日時': karteData.preferredDate1 || '',
-      '第2希望日時': karteData.preferredDate2 || '',
-      '第3希望日時': karteData.preferredDate3 || '',
-      
-      // フルカルテ情報
-      '本名': karteData.fullName || '',
-      '年齢・年代': karteData.age || '',
-      '緊急連絡先': karteData.emergencyContact || '',
-      'キャンセルポリシー同意': karteData.cancelPolicy || false,
-      '病室番号': karteData.roomNumber || '',
-      '訪問時の注意事項': karteData.visitingInstructions || ''
+      '最終更新日時': new Date().toISOString()
     };
+    
+    // 値がある場合のみフィールドを追加
+    if (karteData.prefecture) fields['都道府県'] = karteData.prefecture;
+    if (karteData.city) fields['市区町村'] = karteData.city;
+    if (karteData.menuTarget) fields['メニュー対象'] = karteData.menuTarget;
+    if (karteData.menuCategory) fields['メニューカテゴリ'] = karteData.menuCategory;
+    if (karteData.menuDetail) fields['メニュー詳細'] = karteData.menuDetail;
+    if (karteData.hasOff) fields['オフ有無'] = karteData.hasOff;
+    if (karteData.estimatedPrice) fields['参考料金'] = karteData.estimatedPrice;
+    if (karteData.scene) fields['利用シーン'] = karteData.scene;
+    if (karteData.hospitalName) fields['施設名'] = karteData.hospitalName;
+    if (karteData.permission) fields['許可状況'] = karteData.permission;
+    
+    // ミドルカルテ情報
+    if (karteData.preferredDate1) fields['第1希望日時'] = karteData.preferredDate1;
+    if (karteData.preferredDate2) fields['第2希望日時'] = karteData.preferredDate2;
+    if (karteData.preferredDate3) fields['第3希望日時'] = karteData.preferredDate3;
+    
+    // フルカルテ情報
+    if (karteData.fullName) fields['本名'] = karteData.fullName;
+    if (karteData.age) fields['年齢・年代'] = karteData.age;
+    if (karteData.emergencyContact) fields['緊急連絡先'] = karteData.emergencyContact;
+    if (karteData.cancelPolicy !== undefined) fields['キャンセルポリシー同意'] = karteData.cancelPolicy;
+    if (karteData.roomNumber) fields['病室番号'] = karteData.roomNumber;
+    if (karteData.visitingInstructions) fields['訪問時の注意事項'] = karteData.visitingInstructions;
     
     let airtableResponse;
     
@@ -241,30 +241,31 @@ app.put('/api/karte/:userId', async (req, res) => {
       
       const fields = {
         'ステータス': karteData.status || 'full',
-        '最終更新日時': new Date().toISOString(),
-        
-        '都道府県': karteData.prefecture || '',
-        '市区町村': karteData.city || '',
-        'メニュー対象': karteData.menuTarget || '',
-        'メニューカテゴリ': karteData.menuCategory || '',
-        'メニュー詳細': karteData.menuDetail || '',
-        'オフ有無': karteData.hasOff || '',
-        '参考料金': karteData.estimatedPrice || 0,
-        '利用シーン': karteData.scene || '',
-        '施設名': karteData.hospitalName || '',
-        '許可状況': karteData.permission || '',
-        
-        '第1希望日時': karteData.preferredDate1 || '',
-        '第2希望日時': karteData.preferredDate2 || '',
-        '第3希望日時': karteData.preferredDate3 || '',
-        
-        '本名': karteData.fullName || '',
-        '年齢・年代': karteData.age || '',
-        '緊急連絡先': karteData.emergencyContact || '',
-        'キャンセルポリシー同意': karteData.cancelPolicy || false,
-        '病室番号': karteData.roomNumber || '',
-        '訪問時の注意事項': karteData.visitingInstructions || ''
+        '最終更新日時': new Date().toISOString()
       };
+      
+      // 値がある場合のみフィールドを追加
+      if (karteData.prefecture) fields['都道府県'] = karteData.prefecture;
+      if (karteData.city) fields['市区町村'] = karteData.city;
+      if (karteData.menuTarget) fields['メニュー対象'] = karteData.menuTarget;
+      if (karteData.menuCategory) fields['メニューカテゴリ'] = karteData.menuCategory;
+      if (karteData.menuDetail) fields['メニュー詳細'] = karteData.menuDetail;
+      if (karteData.hasOff) fields['オフ有無'] = karteData.hasOff;
+      if (karteData.estimatedPrice) fields['参考料金'] = karteData.estimatedPrice;
+      if (karteData.scene) fields['利用シーン'] = karteData.scene;
+      if (karteData.hospitalName) fields['施設名'] = karteData.hospitalName;
+      if (karteData.permission) fields['許可状況'] = karteData.permission;
+      
+      if (karteData.preferredDate1) fields['第1希望日時'] = karteData.preferredDate1;
+      if (karteData.preferredDate2) fields['第2希望日時'] = karteData.preferredDate2;
+      if (karteData.preferredDate3) fields['第3希望日時'] = karteData.preferredDate3;
+      
+      if (karteData.fullName) fields['本名'] = karteData.fullName;
+      if (karteData.age) fields['年齢・年代'] = karteData.age;
+      if (karteData.emergencyContact) fields['緊急連絡先'] = karteData.emergencyContact;
+      if (karteData.cancelPolicy !== undefined) fields['キャンセルポリシー同意'] = karteData.cancelPolicy;
+      if (karteData.roomNumber) fields['病室番号'] = karteData.roomNumber;
+      if (karteData.visitingInstructions) fields['訪問時の注意事項'] = karteData.visitingInstructions;
       
       await axios.patch(
         `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/カルテ/${recordId}`,
